@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "70640008-78ac-4f8b-97eb-c06539b1587f",
+		"name": "SwaggerAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40616058"
+	},
+	"item": [
+		{
+			"name": "GetpetStatus_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//chai assertion _Status Code\r",
+							"\r",
+							"pm.test(\"status code should be 200\",()=>\r",
+							"{\r",
+							"\r",
+							"pm.expect(pm.response.code).to.eql(200)\r",
+							"\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success‐200‐availablePets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://b166cc7d-3afb-4c1f-b861-d16f8d2033fc.mock.pstmn.io/v2/pet/findByStatus?status=available\n",
+							"protocol": "https",
+							"host": [
+								"b166cc7d-3afb-4c1f-b861-d16f8d2033fc",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "available\n"
+								}
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Addpet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Status Code Assertion\r",
+							"pm.test(\"status code should be 200\", () => {\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"// Parse and store pet ID\r",
+							"let res = pm.response.json();\r",
+							"let asId = res.id;\r",
+							"\r",
+							"// Log and set the pet ID in environment\r",
+							"console.log(\"Pet booking id:\", asId);\r",
+							"pm.environment.set(\"newpetId\", asId);\r",
+							"\r",
+							"// Confirm it's set correctly\r",
+							"console.log(\"Saved as newpetId:\", pm.environment.get(\"newpetId\"));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 111,\r\n\"category\": {\r\n\"id\": 0,\r\n\"name\": \"string\"\r\n},\r\n\"name\": \"doggie\",\r\n\"photoUrls\": [\r\n\"string\"\r\n],\r\n\"tags\": [\r\n{\r\n\"id\": 0,\r\n\"name\": \"string\"\r\n}\r\n],\r\n\"status\": \"available\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getpetdetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is a list of pets\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"    pm.expect(jsonData.length).to.be.above(0); // at least one pet\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code should be 200\",()=>\r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"let responseJson = pm.response.json();\r",
+							"\r",
+							"// Validate the main 'name' field\r",
+							"pm.test(\"Main 'name' field is 'Parrots'\", function () {\r",
+							"    pm.expect(responseJson.name).to.eql(\"Parrots\");\r",
+							"});\r",
+							"// Validate the 'name' field in 'category'\r",
+							"pm.test(\"Category 'name' field is 'Birds'\", function () {\r",
+							"    pm.expect(responseJson.category.name).to.eql(\"Birds\");\r",
+							"});\r",
+							"// Validate the 'name' field in the first element of 'tags'\r",
+							"pm.test(\"Tags[0] 'name' field is 'Petlove'\", function () {\r",
+							"    pm.expect(responseJson.tags[0].name).to.eql(\"Petlove\");\r",
+							"});\r",
+							"\r",
+							"// Log all 'name' fields for debugging\r",
+							"console.log(\"Main name:\", responseJson.name);\r",
+							"console.log(\"Category name:\", responseJson.category.name);\r",
+							"console.log(\"Tag name:\", responseJson.tags[0].name);\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n\"id\": 0,\r\n\"category\": {\r\n\"id\": 0,\r\n\"name\": \"Birds\"\r\n},\r\n\"name\": \"Parrots\",\r\n\"photoUrls\": [\r\n\"string\"\r\n],\r\n\"tags\": [\r\n{\r\n\"id\": 0,\r\n\"name\": \"Petlove\"\r\n}\r\n],\r\n\"status\": \"available\"\r\n}\r\n\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletepet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code should be 200\",()=>\r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{newpetId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{newpetId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OAuth2.O",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
